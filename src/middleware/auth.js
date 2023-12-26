@@ -34,10 +34,13 @@ export const auth=(accessRule=[])=>{
     
     }
      
-    if(parseInt(user.changePasswordTime.getTime()/1000)>decoded.iat){
-      return next(new Error("expired token,plz login again",{cause:404}))
-      
+    if(user.changePasswordTime){
+      if(parseInt(user.changePasswordTime.getTime()/1000)>decoded.iat){
+        return next(new Error("expired token,plz login again",{cause:404}))
+        
+      }
     }
+    
     req.user=user
     next()
 

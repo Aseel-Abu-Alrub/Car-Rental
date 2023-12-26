@@ -11,5 +11,5 @@ file:generalFields.file.required().messages({'any.required':'file is required'})
 
 export const signinSchema=joi.object({
   email:generalFields.email.required(),
-  password:generalFields.password.required()  
+  password:joi.string().required()  
 })

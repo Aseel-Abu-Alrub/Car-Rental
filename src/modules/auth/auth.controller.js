@@ -24,6 +24,26 @@ const createUser=await userModel.create({userName,email,password:hashPassword,im
 return res.status(202).json({message:"success",createUser})
 
 }
+export const signUpAdmin=async(req,res,next)=>{
+    const{userName,email,password}=req.body
+    
+    const user=await userModel.findOne({email})
+    if(user){
+    return next(new Error("email already exists",{cause:404}))
+    }
+    const hashPassword=await bcrypt.hash(password,parseInt(process.env.SALT_ROUND))
+    const {secure_url,public_id}=await cloudinary.uploader.upload(req.file.path,{
+    folder:`${process.env.APP_NAME}/profile`
+    })
+    
+    const token=jwt.sign({email},process.env.SENDMAILTOKEN)
+    const html=`<a href='${req.protocol}://${req.headers.host}/auth/confirmemail/${token}'>verify email</a>`
+    await sendmail(email,'confirm Email',html)
+    const createUser=await userModel.create({userName,email,password:hashPassword,image:{secure_url,public_id},role:'Admin'})
+    return res.status(202).json({message:"success",createUser})
+    
+    }
+    
 
 export const confirmEmail=async(req,res,next)=>{
 const{token}=req.params 
@@ -48,8 +68,8 @@ const user=await userModel.findOne({email})
 if(!user){ 
     return next(new Error("Invalid data",{cause:404}))
 }
-const checkuser=await userModel.findOne({confirmEmail:true})
-if(!checkuser){
+const checkuser=await userModel.findOne({email,confirmEmail:true})
+if(!checkuser){ 
     return next(new Error("confirm your email",{cause:404}))
 
 }
@@ -58,7 +78,9 @@ const match= bcrypt.compareSync(password,user.password)
 if(!match){
   return next(new Error("Invalid password ",{cause:404}))  
 }
-const token =jwt.sign({email:user.email,_id:user._id,role:user.role,userName:user.userName,status:user.status},process.env.LOGINTOKEN,{expiresIn:"30m"})
+const token =jwt.sign({email:user.email,_id:user._id,role:user.role,userName:user.userName,status:user.status},process.env.LOGINTOKEN
+    //,{expiresIn:"30m"}
+    )
 const refreshToken =jwt.sign({email:user.email,_id:user._id,role:user.role,userName:user.userName,status:user.status},process.env.LOGINTOKEN,{expiresIn:60*60*24*30})
 
 return res.status(200).json({message:"success",accessToken:token,refreshToken})
