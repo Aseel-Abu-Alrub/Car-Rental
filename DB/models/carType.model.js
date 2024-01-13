@@ -24,16 +24,16 @@ updatedBy:{type:Types.ObjectId,ref:'User',required:true}
 },
 {
 timestamps:true ,
-// toJSON:{virtuals:true},
-// toObject:{virtuals:true}
+toJSON:{virtuals:true},
+toObject:{virtuals:true}
 }
 )
 
-//typeSchema.virtual('car',{
-//  ref:'Car',
-//  localField:'_id',
-//  foreignField:'typeId'  
-// })
+typeSchema.virtual('car',{
+ ref:'Car',
+ localField:'_id',
+ foreignField:'typeId'  
+})
 
 const typeModel=mongoose.models.Type || model('Type',typeSchema)
 

@@ -95,9 +95,17 @@ default:0
 },
 
 {
-timestamps:true    
+timestamps:true ,
+toJSON:{virtuals:true},
+toObject:{virtuals:true},
+
 }
 )
+carSchema.virtual("reviews",{
+ localField:'_id',
+ foreignField:'carId',
+ ref:'Review'  
+})
 
 const carModel=mongoose.models.Car || model('Car',carSchema)
 

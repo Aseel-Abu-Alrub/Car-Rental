@@ -42,9 +42,9 @@ role:{
   enum:['Admin','User']
 },
 phoneNumber:{
-  type:String
+  type:Number
 },
-Address:{
+address:{
   type:String
 },
 changePasswordTime:{

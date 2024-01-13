@@ -5,6 +5,11 @@ import carRouter from "./modules/car/car.router.js"
 import brandRouter from "./modules/brand/brand.router.js"
 import typeRouter from './modules/type/type.router.js'
 import { globalErrorHandler } from './services/errorHandling.js'
+import rentRouter from './modules/rentCar/rent.router.js'
+import couponRouter from './modules/coupon/coupon.router.js'
+import orderRouter from './modules/order/order.router.js'
+import reviewRouter from './modules/review/review.router.js'
+import contactRouter from './modules/contact/contact.router.js'
 import cors from "cors"
 
 
@@ -22,6 +27,11 @@ app.use('/profile',userRouter)
 app.use('/car',carRouter)
 app.use('/brand',brandRouter)
 app.use('/type',typeRouter)
+app.use('/rent',rentRouter)
+app.use('/coupon',couponRouter)
+app.use('/order',orderRouter)
+app.use('/review',reviewRouter)
+app.use('/contact',contactRouter)
 
 
 

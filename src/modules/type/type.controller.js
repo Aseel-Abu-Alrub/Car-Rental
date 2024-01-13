@@ -67,7 +67,7 @@ export const getAllType=async(req,res,next)=>{
     
 } 
 export const getActiveType=async(req,res,next)=>{
-    const type=await  typeModel.find({status:'Active'})
+    const type=await  typeModel.find({status:'Active'}).populate("car")
     
     if(!type){
              return next(new Error("type of car not found",{cause:404})) 

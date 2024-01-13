@@ -51,7 +51,7 @@ return res.status(200).json({message:"success",car})
 export const getSpecificCar=async(req,res,next)=>{
   const{carId}=req.params  
 
-  const car=await carModel.findById(carId).populate("brandId typeId")
+  const car=await carModel.findById(carId).populate("brandId typeId reviews")
 
   if(!car){
    return next(new Error(`car ${carId} not found`)) 
