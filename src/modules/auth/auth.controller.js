@@ -6,13 +6,16 @@ import sendmail from "../../services/sendmail.js"
 import { customAlphabet } from "nanoid"
 
 export const signUp=async(req,res,next)=>{
-const{userName,email,password}=req.body
+const{userName,email,password,cPassword}=req.body
 
 const user=await userModel.findOne({email})
 if(user){
 return next(new Error("email already exists",{cause:404}))
 }
 const hashPassword=await bcrypt.hash(password,parseInt(process.env.SALT_ROUND))
+// if(! bcrypt.compareSync(hashPassword,cPassword)){
+//  return next(nre Error(''))   
+// }
 const {secure_url,public_id}=await cloudinary.uploader.upload(req.file.path,{
 folder:`${process.env.APP_NAME}/profile`
 })
