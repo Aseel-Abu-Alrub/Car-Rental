@@ -14,7 +14,7 @@ import cors from "cors"
 
 
 const initApp=(app,express)=>{
-    app.use(cors())
+app.use(cors())
 app.use(express.json())
 connectDB()
 
