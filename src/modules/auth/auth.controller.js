@@ -24,7 +24,7 @@ const token=jwt.sign({email},process.env.SENDMAILTOKEN)
 const html=`<a href='${req.protocol}://${req.headers.host}/auth/confirmemail/${token}'>verify email</a>`
 await sendmail(email,'confirm Email',html)
 const createUser=await userModel.create({userName,email,phoneNumber:req.body.phoneNumber??'',address:req.body.address??'',password:hashPassword,image:{secure_url,public_id}})
-return res.status(202).json({message:"success",createUser})
+return res.status(202).json({message:"success"})
 
 }
 export const signUpAdmin=async(req,res,next)=>{
