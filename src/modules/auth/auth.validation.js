@@ -5,7 +5,7 @@ export const signupSchema=joi.object({
 userName:joi.string().min(3).max(20).required(),
 email:generalFields.email.required(),
 password:generalFields.password.required(),
-cPassword:generalFields.confirmPassword,
+cPassword:generalFields.cPassword,
 phoneNumber:joi.number(),
 })
 

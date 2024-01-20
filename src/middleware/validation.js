@@ -9,7 +9,7 @@ export const generalFields={
  password:joi.string().required().messages({
     'string.empty':'Password is required'
  }),
- confirmPassword:joi.valid(joi.ref('password')).messages({'any.only':'not match password'}),
+ cPassword:joi.valid(joi.ref('password')).messages({'any.only':'not match password'}),
  file:joi.object({
     size:joi.number().positive().required(),
     path:joi.string().required(),
