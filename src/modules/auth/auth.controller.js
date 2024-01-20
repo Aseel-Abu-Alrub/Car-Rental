@@ -13,9 +13,6 @@ if(user){
 return next(new Error("email already exists",{cause:404}))
 }
 const hashPassword=await bcrypt.hash(password,parseInt(process.env.SALT_ROUND))
-// if(! bcrypt.compareSync(hashPassword,cPassword)){
-//  return next(nre Error(''))   
-// }
 const {secure_url,public_id}=await cloudinary.uploader.upload(req.file.path,{
 folder:`${process.env.APP_NAME}/profile`
 })

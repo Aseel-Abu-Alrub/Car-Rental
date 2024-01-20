@@ -6,7 +6,7 @@ import * as validator from './auth.validation.js'
 import { validation } from "../../middleware/validation.js";
 const router=Router()
 
-router.post('/signup',fileUpload(fileValidation.image).single('image'),validation(validator.signupSchema),asyncHandler(AuthController.signUp))
+router.post('/signup',validation(validator.signupSchema),asyncHandler(AuthController.signUp))
 router.post('/signupAdmin',fileUpload(fileValidation.image).single('image'),validation(validator.signupSchema),asyncHandler(AuthController.signUpAdmin))
 
 router.get('/confirmemail/:token',asyncHandler(AuthController.confirmEmail))
