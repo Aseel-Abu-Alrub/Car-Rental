@@ -7,7 +7,6 @@ email:generalFields.email.required(),
 password:generalFields.password.required(),
 cPassword:generalFields.confirmPassword,
 phoneNumber:joi.number(),
-file:generalFields.file.required().messages({'any.required':'file is required'})
 })
 
 export const signinSchema=joi.object({
