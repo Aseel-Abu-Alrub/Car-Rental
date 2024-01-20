@@ -6,21 +6,21 @@ import sendmail from "../../services/sendmail.js"
 import { customAlphabet } from "nanoid"
 
 export const signUp=async(req,res,next)=>{
-const{userName,email,password,cPassword}=req.body
+const{userName,email,password}=req.body
 
 const user=await userModel.findOne({email})
 if(user){
 return next(new Error("email already exists",{cause:404}))
 }
 const hashPassword=await bcrypt.hash(password,parseInt(process.env.SALT_ROUND))
-const {secure_url,public_id}=await cloudinary.uploader.upload(req.file.path,{
-folder:`${process.env.APP_NAME}/profile`
-})
+// const {secure_url,public_id}=await cloudinary.uploader.upload(req.file.path,{
+// folder:`${process.env.APP_NAME}/profile`
+// })
 
 const token=jwt.sign({email},process.env.SENDMAILTOKEN)
 const html=`<a href='${req.protocol}://${req.headers.host}/auth/confirmemail/${token}'>verify email</a>`
 await sendmail(email,'confirm Email',html)
-const createUser=await userModel.create({userName,email,phoneNumber:req.body.phoneNumber??'',address:req.body.address??'',password:hashPassword})
+await userModel.create({userName,email,phoneNumber:req.body.phoneNumber??'',address:req.body.address??'',password:hashPassword})
 return res.status(202).json({message:"success"})
 
 }
